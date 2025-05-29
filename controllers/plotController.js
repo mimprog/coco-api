@@ -1,190 +1,178 @@
 const db = require('../db');
 const { Plot } = require('../models/models');
 
+// Get all plots
 exports.all = async (req, res) => {
     try {
         const plots = await Plot.findAll();
         res.status(200).json(plots);
     } catch (err) {
-        res.status(500).json({
-            message : err.message
-        });
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
+// Get a single plot by ID
 exports.get = async (req, res) => {
-    const { code } = req.params;
+    const { id } = req.params;
 
     try {
-        const plot = await Plot.findOne({ where: { 'code': code } });
+        const plot = await Plot.findByPk(id);
 
-        if(plot == null)
-        {
-            return res.status(404).json("Cette parcelle n'existe pas");    
+        if (!plot) {
+            return res.status(404).json({ message: "Cette parcelle n'existe pas" });
         }
+
         res.status(200).json(plot);
     } catch (err) {
-        res.status(500).json({
-            message : err.message
-        });
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
+//  Create a new plot
 exports.create = async (req, res) => {
-    const { code,
-            region,
-            dept,
-            arr,
-            village,
-            area,
-            location,
-            xCoord,
-            yCoord,
-            plantingAge,
-            plantsNumber,
-            productionPerYear,
-            chemistryIntrants,
-            cIYearUseFrequency,
-            fertilizer,
-            fYearUseFrequency,
-            difficulties,
-        
-            cooperativeId,
-            userCode } = req.body;
-    try {
-        const plot = await Plot.create({ code,
-            region,
-            dept,
-            arr,
-            village,
-            area,
-            location,
-            xCoord,
-            yCoord,
-            plantingAge,
-            plantsNumber,
-            productionPerYear,
-            chemistryIntrants,
-            cIYearUseFrequency,
-            fertilizer,
-            fYearUseFrequency,
-            difficulties,
-            cooperativeId,
-            userCode });
-        
-        res.status(201).json({ message: "Parcelle créée avec succès", "plot": plot });
-    } catch(err) {
-        res.status(500).json({
-            message : err.message
-        });
-    }
-}
-
-
-exports.update = async (req, res) => {
-    
-    const { code } = req.params;
-    const { region,
-        dept,
-        arr,
-        village,
-        area,
-        location,
-        xCoord,
-        yCoord,
-        plantingAge,
-        plantsNumber,
-        productionPerYear,
-        chemistryIntrants,
-        cIYearUseFrequency,
+    const {
+        id,
+        statut,
+        x,
+        y,
+        QR_URL,
+        operateur,
+        subdivision,
+        landstatus,
+        name,
+        surname,
+        matrimonia,
+        residence,
+        education,
+        lieuedit,
+        ageplantat,
+        plantnumber,
+        output,
         fertilizer,
-        fYearUseFrequency,
-        difficulties,
+        nbfertil,
+        insecticid,
+        nbinsect,
+        problems,
+        region,
+        departement,
+        village,
+        surface,
+        cooperative,
+        sex,
+        tel
+    } = req.body;
+
     
-        cooperativeId,
-        userCode } = req.body;
 
     try {
-        const plot = await Plot.findOne({ where: { "code": code }});
-        
-        if(plot != null)
-        {
-            if(region != null) plot.region = region;
-            if(dept != null) plot.dept = dept;
-            if(arr != null) plot.arr = arr;
-            if(village != null) plot.village = village;
-            if(area != null) plot.area = area;
-            if(location != null) plot.location = location;
-            if(xCoord != null) plot.xCoord = xCoord;
-            if(yCoord != null) plot.yCoord = yCoord;
-            if(plantingAge != null) plot.plantingAge = plantingAge;
-            if(plantsNumber != null) plot.plantsNumber = plantsNumber;
-            if(productionPerYear != null) plot.productionPerYear = productionPerYear;
-            if(chemistryIntrants != null) plot.chemistryIntrants = chemistryIntrants;
-            if(cIYearUseFrequency != null) plot.cIYearUseFrequency = cIYearUseFrequency;
-            if(fertilizer != null) plot.fertilizer = fertilizer;
-            if(fYearUseFrequency != null) plot.fYearUseFrequency = fYearUseFrequency;
-            if(difficulties != null) plot.difficulties = difficulties;
-            if(cooperativeId != null) plot.cooperativeId = cooperativeId;
-            if(userCode != null) plot.userCode = userCode;            
-
-            plot.save();
-        
-            res.status(200).json({ message: "Parcelle modifiée avec succès", "plot": plot });
-        } else {
-            return res.status(404).json({ message: "Parcelle inexistante" });
-        }
-    } catch(err) {
-        res.status(500).json({
-            message : err.message
+        const newPlot = await Plot.create({
+            statut,
+            operateur,
+            subdivision,
+            landstatus,
+            name,
+            surname,
+            matrimonia,
+            residence,
+            education,
+            lieuedit,
+            ageplantat,
+            plantnumber,
+            output,
+            fertilizer,
+            nbfertil,
+            insecticid,
+            nbinsect,
+            problems,
+            region,
+            departement,
+            village,
+            surface,
+            cooperative,
+            sex,
+            tel,
+            x,
+            y,
+            QR_URL,
+            id
         });
+
+        console.log(newPlot);
+
+        res.status(201).json({ message: "Parcelle créée avec succès", plot: newPlot });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
 exports.updateCoords = async (req, res) => {
-    
     const { code } = req.params;
-    const { xCoord,
-            yCoord,
-            userCode } = req.body;
+    const { xCoord, yCoord, userCode } = req.body;
 
     try {
-        const plot = await Plot.findOne({ where: { "code": code, "userCode": userCode }});
-        
-        if(plot != null)
-        {
-            if(xCoord != null) plot.xCoord = xCoord;
-            if(yCoord != null) plot.yCoord = yCoord;
+        const plot = await Plot.findOne({ where: { code, userCode } });
 
-            plot.save();
-        
-            res.status(200).json({ message: "Coordonnées modifiées avec succès", "plot": plot });
-        } else {
+        if (!plot) {
             return res.status(404).json({ message: "Parcelle inexistante" });
         }
-    } catch(err) {
-        res.status(500).json({
-            message : err.message
-        });
+
+        if (xCoord !== undefined) plot.xCoord = xCoord;
+        if (yCoord !== undefined) plot.yCoord = yCoord;
+
+        await plot.save();
+
+        res.status(200).json({ message: "Coordonnées modifiées avec succès", plot });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-}
+};
 
-exports.delete = async (req, res) => {
 
-    const { code } = req.params;
+// Update plot by ID
+exports.update = async (req, res) => {
+    const { id } = req.params;
 
     try {
-        const deletedPlot = await Plot.destroy({ where: { "code": code }});
+        const plot = await Plot.findByPk(id);
 
-        if(deletedPlot > 0)
-        {
-            res.status(200).json({ message: "Parcelle supprimée avec succès" });
+        if (!plot) {
+            return res.status(404).json({ message: "Parcelle inexistante" });
         }
-        else res.status(404).json({ message: "Parcelle inexistante" });
-        
-    } catch(err) {
-        res.status(500).json({
-            message : err.message
+
+        const updatedFields = [
+            "statut", "operateur", "subdivision", "landstatus", "name", "surname",
+            "matrimonia", "residence", "education", "lieuedit", "ageplantat", "plantnumber",
+            "output", "fertilizer", "nbfertil", "insecticid", "nbinsect", "problems",
+            "region", "departement", "village", "surface", "cooperative", "sex", "tel"
+        ];
+
+        updatedFields.forEach(field => {
+            if (req.body[field] !== undefined) {
+                plot[field] = req.body[field];
+            }
         });
+
+        await plot.save();
+        res.status(200).json({ message: "Parcelle modifiée avec succès", plot });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-}
+};
+
+// ✅ Delete a plot by ID
+exports.delete = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deleted = await Plot.destroy({ where: { id } });
+
+        if (deleted) {
+            res.status(200).json({ message: "Parcelle supprimée avec succès" });
+        } else {
+            res.status(404).json({ message: "Parcelle inexistante" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+

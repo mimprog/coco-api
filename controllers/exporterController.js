@@ -49,6 +49,7 @@ exports.update = async (req, res) => {
     
     const { id } = req.params;
     const { name } = req.body;
+    console.log(req.body);
 
     try {
         const exporter = await Exporter.findOne({ where: { "id": id }});

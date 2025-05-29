@@ -39,6 +39,7 @@ exports.get = async (req, res) => {
  * price (XAF) 
  */
 exports.create = async (req, res) => {
+    console.log(req.body);
     const { quantity, price, date, userCode, cooperativeId } = req.body;
     try {
         //const userId = req.userData.userId;

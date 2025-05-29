@@ -4,6 +4,7 @@ const { Sale } = require('../models/models');
 exports.all = async (req, res) => {
     try {
         const sales = await Sale.findAll({ order: [['date', 'DESC']] });
+        console.log(sales);
         res.status(200).json(sales);
     } catch (err) {
         res.status(500).json({
@@ -32,6 +33,7 @@ exports.get = async (req, res) => {
 
 exports.create = async (req, res) => {
     const { quantity, price, date, cooperativeId, exporterId } = req.body;
+    console.log(req.body);
     try {
         //const userId = req.userData.userId;
         const sale = await Sale.create({ quantity, price, date, cooperativeId, exporterId });

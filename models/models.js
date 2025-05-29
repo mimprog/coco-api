@@ -54,40 +54,127 @@ const Sale = sequelize.define("sale", {
 
 // Plot Model
 const Plot = sequelize.define("plot", {
-    statut: DataTypes.STRING,
-    operateur: DataTypes.STRING,
-    subdivision: DataTypes.STRING,
-    landstatus: DataTypes.STRING,
-    name: DataTypes.STRING,
-    surname: DataTypes.STRING,
-    matrimonia: DataTypes.STRING,
-    residence: DataTypes.STRING,
-    education: DataTypes.STRING,
-    lieuedit: DataTypes.STRING,
-    ageplantat: DataTypes.STRING,
-    plantnumber: DataTypes.STRING,
-    output: DataTypes.STRING,
-    fertilizer: DataTypes.STRING,
-    nbfertil: DataTypes.STRING,
-    insecticid: DataTypes.STRING,
-    nbinsect: DataTypes.STRING,
-    problems: DataTypes.TEXT,
+    statut: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    operateur: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    subdivision: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    landstatus: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    surname: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    matrimonia: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    residence: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    education: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    lieuedit: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    ageplantat: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    plantnumber: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    output: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    fertilizer: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    nbfertil: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    insecticid: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    nbinsect: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    problems: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     id: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
     },
-    region: DataTypes.STRING,
-    departement: DataTypes.STRING,
-    village: DataTypes.STRING,
-    surface: DataTypes.STRING,
-    cooperativeName: DataTypes.STRING,
-    sex: DataTypes.STRING,
-    tel: DataTypes.STRING,
-    photo: DataTypes.STRING,
-    x: DataTypes.DECIMAL,
-    y: DataTypes.DECIMAL,
-    QR_URL: DataTypes.STRING
+    region:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    departement:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    village:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    surface:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    cooperativeName:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    sex:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    tel:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    photo:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    x:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    y:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    QR_URL:{
+        type: DataTypes.STRING,
+        allowNull: true
+    }
 });
 
 /** ---------- RELATIONS ---------- **/
