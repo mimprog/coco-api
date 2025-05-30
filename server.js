@@ -45,7 +45,7 @@ app.use(
 */
 
 // Synchroniser les modèles avec la base de données
-sequelize.sync({force: false})
+sequelize.sync({force: true})
 .then(async () => {
   console.log("Les tables ont été synchronisées");
   await importDatas();
