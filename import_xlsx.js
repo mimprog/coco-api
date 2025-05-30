@@ -21,24 +21,31 @@ exports.importDatas = async () => {
             await Cooperative.findOrCreate({ where: { name: coop } });
         }
 
-        for (const [i, row] of data.entries()) {
-            const fn = faker.person.firstName();
-            const ln = faker.person.lastName();
 
-            const code = String(row["id"]) || `P-${i + 1}`;
-            const username = faker.internet.userName({ firstName: fn, lastName: ln });
-            const email = faker.internet.email({ firstName: fn, lastName: ln });
-            const phone = row["tel"] || faker.phone.number('6########');
-            const password = "12345678";
+    for (const [i, row] of data.entries()) {
+        const fn = faker.person.firstName();
+        const ln = faker.person.lastName();
+const rawName = row["name"] ? String(row["name"]).replace(/\s+/g, '') : 'user';
+const code = `${rawName.substring(0, 4)}000`.toUpperCase();
+        const id = row["id"];
 
-            // Create user
-            const [user] = await User.findOrCreate({
-                where: { code },
-                defaults: { code, username, email, phone, password }
-            });
+        const username = faker.internet.userName({ firstName: fn, lastName: ln });
+        const email = faker.internet.email({ firstName: fn, lastName: ln });
+        const phone = row["tel"] || faker.phone.number('6########');
+        const password = "12345678";
 
-            // Create plot
-            const plotData = {
+        // Create user
+        const [user] = await User.findOrCreate({
+            where: { code },
+            defaults: { code, username, email, phone, password }
+        });
+
+        console.log(code);
+
+    // Create plot
+    const plotData = {
+        id: id,
+        userCode: code,
                 statut: row["statut"],
                 operateur: row["operateur"],
                 subdivision: row["subdivision"],
@@ -57,7 +64,7 @@ exports.importDatas = async () => {
                 insecticid: row["insecticid"],
                 nbinsect: row["nbinsect"],
                 problems: row["problems"],
-                id: code, // match user code
+
                 region: row["region"],
                 departement: row["departement"],
                 village: row["village"],
@@ -69,11 +76,10 @@ exports.importDatas = async () => {
                 x: row["x"],
                 y: row["y"],
                 QR_URL: row["QR_URL"],
-                userCode: code // foreign key reference (if needed)
-            };
+    };
 
-            await Plot.create(plotData);
-        }
+    await Plot.create(plotData);
+}       
 
         console.log("✅ Data import completed.");
     } catch (err) {

@@ -47,23 +47,27 @@ exports.create = async (req, res) => {
 
 
 exports.update = async (req, res) => {
-    
+   
     const { code } = req.params;
     const { username, email, phone } = req.body;
+    console.log(code);
 
     try {
         const user = await User.findOne({ where: { "code": code }});
+        console.log(user);
         
-        if(user != null)
+        if(user)
         {
-            if(username != null) user.username = username;
-            if(email != null) user.email = email;
-            if(phone != null) user.phone = phone;
+            if(username) user.username = username;
+            if(email) user.email = email;
+            if(phone) user.phone = phone;
+            if(code) user.code = code;
 
-            user.save();
+            await user.save();
         
-            res.status(200).json({ message: "User modifié avec succès", "user": user });
-        } else {
+            return res.status(200).json({ message: "User modifié avec succès", "user": user });
+        } 
+        else {
             return res.status(404).json({ message: "User inexistant" });
         }
     } catch(err) {
