@@ -20,7 +20,6 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-
 async function createDatabase(dbname) {
   const client = new Client({
     user: process.env.DB_USER,

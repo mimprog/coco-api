@@ -1,11 +1,22 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/models');
 
-
 exports.register = async (req, res) => {
   console.log(req.body);
   try {
     const { code, username, email, phone, password } = req.body;
+
+    const existingUser = await User.findOne({where: {username}});
+    console.log(existingUser);
+
+    if (!username || !password) {
+      return res.status(400).json({ error: "Le nom d'utilisateur et mot de passe" });
+    }
+
+    if(existingUser) {
+      console.log("Yess");
+      return res.status(404).json({message: "L'utilisateur n'existe pas"});
+    }
 
     const newUser = await User.create({ code, username, email, phone, password });
     
@@ -18,6 +29,7 @@ exports.register = async (req, res) => {
         "phone": newUser.phone
       }
     });
+
   } catch (err) {
     res.status(500).json({
       message: "Impossible de créé l'utilisateur",

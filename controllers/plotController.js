@@ -14,7 +14,7 @@ exports.all = async (req, res) => {
 // Get a single plot by ID
 exports.get = async (req, res) => {
     const { id } = req.params;
-
+    console.log(id);
     try {
         const plot = await Plot.findByPk(id);
 

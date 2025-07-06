@@ -33,11 +33,12 @@ const code = `${rawName.substring(0, 4)}000`.toUpperCase();
         const email = faker.internet.email({ firstName: fn, lastName: ln });
         const phone = row["tel"] || faker.phone.number('6########');
         const password = "12345678";
+        const role = "USER";
 
         // Create user
         const [user] = await User.findOrCreate({
             where: { code },
-            defaults: { code, username, email, phone, password }
+            defaults: { code, username, email, phone, password, role }
         });
 
         console.log(code);
