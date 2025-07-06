@@ -97,7 +97,7 @@ exports.create = async (req, res) => {
             id
         });
 
-        console.log(newPlot);
+        //console.log(newPlot);
 
         res.status(201).json({ message: "Parcelle créée avec succès", plot: newPlot });
     } catch (err) {
