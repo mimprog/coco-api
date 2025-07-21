@@ -10,12 +10,12 @@ exports.register = async (req, res) => {
     console.log(existingUser);
 
     if (!username || !password) {
-      return res.status(400).json({ error: "Le nom d'utilisateur et mot de passe" });
+      return res.status(400).json({ error: "username and password ??" });
     }
 
     if(existingUser) {
       console.log("Yess");
-      return res.status(404).json({message: "L'utilisateur n'existe pas"});
+      return res.status(404).json({message: "User already exists"});
     }
 
     const newUser = await User.create({ code, username, email, phone, password });

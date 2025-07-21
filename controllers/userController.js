@@ -35,9 +35,20 @@ exports.create = async (req, res) => {
     const { code, username, email, phone } = req.body;
     try {
         //const userId = req.userData.userId;
+
         const user = await User.create({ code, username, email, phone });
-        
-        res.status(201).json({ message: "Utilisateur créé avec succès", "user": user });
+    const existingUser = await User.findOne({where: {username}});
+    console.log(existingUser);
+
+    if (!username || !password) {
+      return res.status(400).json({ error: "username and password ??" });
+    }
+
+    if(existingUser) {
+      console.log("Yess");
+      return res.status(404).json({message: "User already exists"});
+    }
+        res.status(201).json({ message: "User has been created successfully", "user": user });
     } catch(err) {
         res.status(500).json({
             message : err.message
