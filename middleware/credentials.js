@@ -1,5 +1,5 @@
 const allowedOrigins = [
-    'https://Trace_Cocoa.onrender.com',
+    'https://trace_cocoa.onrender.com',
     'http://localhost:3000',
     'https://coco-ydre.onrender.com'
 ];

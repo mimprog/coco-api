@@ -20,7 +20,9 @@ app.use(express.urlencoded({extended: false}));
 const port = process.env.PORT || 5000;
 const credentials = require("./middleware/credentials");
 app.use(credentials);
-var allowedOrigins = [ 'http://localhost:3000','https://Trace_Cocoa.onrender.com']
+var allowedOrigins = [     'https://trace_cocoa.onrender.com',
+    'http://localhost:3000',
+    'https://coco-ydre.onrender.com']
 let corsOptions = {
     credentials: true,
     origin: function(origin, callback) {
